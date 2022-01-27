@@ -2,11 +2,12 @@ import React,{useContext} from 'react';
 import {StyleSheet,Text,View,FlatList,TouchableOpacity} from 'react-native'
 import { NotesContext } from '../../Context/NotesContext';
 import {AntDesign} from "@expo/vector-icons"
-const ListNoteScreen = () => {
+
+const ListNoteScreen = ({navigation}) => {
     const {state,dispatch} =useContext(NotesContext)
 
   return (
-
+   
 <View style={styles.views}>
     <View style={styles.data}>
     <TouchableOpacity style={styles.opacity}>
@@ -14,8 +15,7 @@ const ListNoteScreen = () => {
     name='plus'
     size={30} 
     color="white"
-    onPress={()=>dispatch({type:"ADD"})}/>
-<FlatList
+    onPress={()=>navigation.navigate("Create")}
     />
     </TouchableOpacity>
 
@@ -28,6 +28,9 @@ keyExtractor={item=>item.title}
 
 renderItem={({item})=>{
     return(
+        <TouchableOpacity 
+        onPress={()=>navigation.navigate("show",{id:item.id})}
+        >
         <View style={styles.delete}>
     <Text style={styles.text}>{item.title}</Text>
  
@@ -37,12 +40,13 @@ renderItem={({item})=>{
     onPress={()=>dispatch({type:"REMOVE",payload:item.id})}
     />
         </View>
+        </TouchableOpacity>
 
     )
-}}
+}}/>
 
-/>
       </View>
+  
 
     )
 };

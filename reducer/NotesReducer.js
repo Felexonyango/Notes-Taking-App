@@ -2,13 +2,28 @@
  
  ]
  
- export const  reducer=(state,action)=>{
+ export const  reducer=(state,{type,payload})=>{
 
-    switch(action.type){
+    switch(type){
         case "ADD":
-            return [...state,{id:Math.random(),title:`blog title${state.length+1}`,content:"test"}]
+            return [...state,
+                {id:Math.random(),
+                title:payload.title,
+                content:payload.content
+            }]
             case "REMOVE":
-                return  state.filter((note)=>action.payload !==note.id)
+                return  state.filter((note)=>payload !==note.id)
+                case "UPDATE":
+                   return  state.map(record=>{
+                         if(payload.id===record.id)
+                            return  payload
+                          
+                         else
+
+                         return record
+                       
+                        
+                    })
 
             default:
                 return state
